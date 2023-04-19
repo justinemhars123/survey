@@ -1,27 +1,43 @@
-import javax.swing.JOptionPane;
-public class Survey {
+import java.util.Scanner;
+
+public class ElectionProgram {
     public static void main(String[] args) {
-        String q1, q2, q3, q4;
-        int surveyQuestion1,surveyQuestion2,surveyQuestion3,surveyQuestion4 , selection;
-        do {
-            q1 = JOptionPane.showInputDialog(null, "How you feel" + "\n1. Good" + "\n2. Alright" + "\n3. Bad");
-            surveyQuestion1 = Integer.parseInt(q1);
+        Scanner scanner = new Scanner(System.in);
 
-            q2 = JOptionPane.showInputDialog(null, "How is family" + "\n1. Good" + "\n2. Alright" + "\n3. Bad");
-            surveyQuestion2 = Integer.parseInt(q2);
+        // Get the number of candidates
+        System.out.print("Enter the number of candidates: ");
+        int numCandidates = scanner.nextInt();
+        scanner.nextLine(); // Clear the input buffer
 
-            q3 = JOptionPane.showInputDialog(null, "How is home" + "\n1. Good" + "\n2. Alright" + "\n3. Bad");
-            surveyQuestion3 = Integer.parseInt(q3);
+        // Create an array to store candidate names and their votes
+        String[] candidateNames = new String[numCandidates];
+        int[] candidateVotes = new int[numCandidates];
 
-            q4 = JOptionPane.showInputDialog(null, "How is your life" + "\n1. Good" + "\n2. Alright" + "\n3. Bad");
-            surveyQuestion4 = Integer.parseInt(q4);
+        // Get candidate names from the user
+        for (int i = 0; i < numCandidates; i++) {
+            System.out.print("Enter the name of candidate " + (i + 1) + ": ");
+            candidateNames[i] = scanner.nextLine();
+        }
 
-            selection = JOptionPane.showConfirmDialog(null, "Do you want to set another response ?");
-        } while (selection == JOptionPane.YES_OPTION);
-       if(selection == JOptionPane.NO_OPTION){
-           JOptionPane.showMessageDialog(null,"The people choose " + surveyQuestion1 + " the most from the first question ");
-           JOptionPane.showMessageDialog(null,"The people choose " + surveyQuestion2 + " the most from the second question ");
-           JOptionPane.showMessageDialog(null,"The people choose " + surveyQuestion3 + " the most from the third question ");
-           JOptionPane.showMessageDialog(null,"The people choose " + surveyQuestion4 + " the most from the fourth question ");
-       }
+        // Get votes for each candidate from the user
+        for (int i = 0; i < numCandidates; i++) {
+            System.out.print("Enter the number of votes received by " + candidateNames[i] + ": ");
+            candidateVotes[i] = scanner.nextInt();
+            scanner.nextLine(); // Clear the input buffer
+        }
+
+        // Calculate the total votes
+        int totalVotes = 0;
+        for (int votes : candidateVotes) {
+            totalVotes += votes;
+        }
+
+        // Calculate and display the percentage of votes received by each candidate
+        System.out.println("Election Results:");
+        for (int i = 0; i < numCandidates; i++) {
+            double percentage = (double) candidateVotes[i] / totalVotes * 100;
+            System.out.printf("%s received %d votes, which is %.2f%% of the total votes.%n",
+                    candidateNames[i], candidateVotes[i], percentage);
+        }
     }
+}
